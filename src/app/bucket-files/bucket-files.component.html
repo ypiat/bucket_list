@@ -1,0 +1,55 @@
+<div *ngIf="bucket">
+	<h3 class='page_title'>{{bucket.name}}</h3>
+
+	<!-- navigation div -->
+	<div class='nav'>
+		<button type="button" class="active">Files</button>
+		<button type="button" class="hover" [routerLink]="['/buckets/details/' + bucketIdFromRoute]">Details</button>
+	</div>
+	<!-- div with all files -->
+	<div class='container2'>
+		<div class='top'>
+			<p>All Files ({{bucket.files.length}})</p> 
+			<div>
+				<button type="button" (click)="openVerticallyCentered(content)" class="btn btn-primary btn-sm btn-files" [ngClass]="{'disable' : disableBtn}">Delete Object</button>
+				<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
+				<div class="file-upload">
+				    <button  type="button" (click)="fileUpload.click()" class="btn btn-primary btn-sm btn-files">Upload Object</button>
+				</div>
+			</div>	
+		</div>
+		<div class='tableDiv'>
+		<!-- table with files -->
+			<table class='filesTable'>
+			  <tr>
+			    <td>Name</td>
+			    <td>Last modified</td>
+			    <td>Size</td>
+			  </tr>
+			  <tr *ngFor='let file of bucket.files'>
+			    <td><input type="checkbox" id={{file.url}} (change)="toggleCheckbox($event)"> <img src='../assets/file.png' class='file-img'><a href={{file.url}} target="_blank" [innerHTML]='sliceText(file.name)'></a></td>
+			    <td>{{file.lastModified}}</td>
+			    <td>{{file.size}}</td>
+			  </tr>		  
+			  <tr>
+			  </tr>
+			</table>
+		</div>	
+	</div>
+</div>
+
+
+<!-- popup message -->
+<ng-template #content let-modal>
+	<div class="modal-body">
+		<p>Do you really want to delete this file(s)?</p>
+		<div>
+			<button type="button" class="btn btn-primary btn-sm btn-files" (click)="modal.close('Close click'); deleteObject()">Delete</button>
+			<button type="button" class="btn btn-primary btn-sm btn-files" (click)="modal.close('Close click')" >Cancel</button>
+		</div>
+	</div>
+</ng-template>
+
+
+

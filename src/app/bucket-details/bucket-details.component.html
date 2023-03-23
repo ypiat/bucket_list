@@ -1,0 +1,42 @@
+<div *ngIf="bucket">
+	<h3 class='page_title'>{{bucket.name}}</h3>
+
+	<!-- navigation div -->
+	<div class='nav'>
+		<button type="button" class="hover" [routerLink]="['/buckets/' + bucketIdFromRoute]">Files</button>
+		<button type="button" class="active" >Details</button>
+		<button type="button" (click)="openVerticallyCentered(content)" class="btn btn-primary btn-sm create-btn">Delete Bucket</button>
+	</div>
+
+	<!-- div with bucket's details -->
+	<div class='container2'>
+		<div class='top'>
+			<table class='details-table'>
+			  <tr>
+			    <td>Bucket name:</td>
+			    <td>{{bucket.name}}</td>
+			  </tr>
+			  <tr>
+			    <td>Location:</td>
+			    <td>{{bucket.location}}</td>
+			  </tr>
+			  <tr>
+			    <td>Storage size:</td>
+			    <td>{{bucket.storageSize}}</td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- popup message -->
+<ng-template #content let-modal>
+	<div class="modal-body">
+		<p>Do you really want to delete this bucket?</p>
+		<div>
+			<button type="button" class="btn btn-primary btn-sm btn-files" (click)="modal.close('Close click'); deleteBucket()" [routerLink]="['/']">Delete</button>
+			<button type="button" class="btn btn-primary btn-sm btn-files" (click)="modal.close('Close click')" >Cancel</button>
+		</div>
+	</div>
+</ng-template>
+
